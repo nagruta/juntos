@@ -1,0 +1,111 @@
+---
+all:
+  vars:
+    entrada_path_ssh: ~/.ssh/
+  hosts:
+    host_example_01:
+      ansible_host: 192.168.9.1
+      ansible_private_key_file: "{{ entrada_path_ssh }}/aws-key-pair-example.pem"
+      entrada_webs_cert_domain: exampledomain.com
+    host_example_02:
+      ansible_host: 192.168.9.2
+      ansible_host: 176.57.150.146
+      ansible_password: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        123456789
+      ansible_control_path_dir: /home/{{ ansible_user}}/.ansible/cp
+    host_example_03:
+      ansible_host: 192.168.9.3
+    host_example_04:
+      ansible_host: 192.168.9.4
+    host_example_05:
+      ansible_host: 192.168.9.5
+    host_example_06:
+      ansible_host: 192.168.9.6
+    host_example_07:
+      ansible_host: 192.168.9.7
+    host_local_vagrant:
+      ansible_host: 10.0.2.2
+      ansible_password: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        567891234
+      janelas_user_name: januser
+      janelas_user_password: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        987654321
+      janelas_user_adminable: true
+      janelas_user_remotable: false
+  children:
+    group_os_debian:
+      children:
+        # !!! isolate group down one level down to prevent var overrides
+        group_os_debian_vars:
+          vars:
+            ansible_user: admin
+          hosts:
+            host_example_01:
+            host_example_02:
+    group_os_ubuntu:
+      children:
+        # !!! isolate group down one level down to prevent var overrides
+        group_os_ubuntu_vars:
+          vars:
+            ansible_user: ubuntu
+          hosts:
+            host_example_03:
+            host_example_04:
+    group_os_win:
+      vars:
+        ansible_connection: winrm
+        ansible_winrm_server_cert_validation: ignore
+        ansible_winrm_transport: ntlm
+        ansible_user: jansible
+        ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          112233445566778899
+      children:
+        group_win_devrust:
+          hosts:
+            host_example_05:
+            host_local_vagrant:
+        group_win_devuehard:
+          hosts:
+            host_example_06:
+        group_win_devuesoft:
+          hosts:
+            host_local_vagrant:
+        group_win_user_naluar:
+          hosts:
+            host_example_05:
+        group_win_user_other:
+          hosts:
+            host_example_06:
+    group_purpose_backrest:
+      children:
+        # !!! isolate group down one level down to prevent var overrides
+        group_purpose_backrest_vars:
+          vars:
+          hosts:
+            host_example_01:
+    group_purpose_frontweb:
+      children:
+        # !!! isolate group down one level down to prevent var overrides
+        group_purpose_frontweb_vars:
+          vars:
+          hosts:
+            host_example_02:
+    group_purpose_scpfiles:
+      children:
+        # !!! isolate group down one level down to prevent var overrides
+        group_purpose_scpfiles_vars:
+          vars:
+          hosts:
+            host_example_03:
+    group_purpose_stunturn:
+      children:
+        # !!! isolate group down one level down to prevent var overrides
+        group_purpose_stunturn_vars:
+          vars:
+          hosts:
+            host_example_04:
+...
