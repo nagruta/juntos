@@ -1,0 +1,3 @@
+[submodule "mod/entrada"]
+	path = mod/entrada
+	url = https://gitlab.com/naluar/entrada
