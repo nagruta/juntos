@@ -1,6 +1,6 @@
 [submodule "mod/entrada"]
 	path = mod/entrada
-	url = https://gitlab.com/naluar/entrada
+	url = https://gitlab.com/nagruta/entrada
 [submodule "mod/janelas"]
 	path = mod/janelas
-	url = https://gitlab.com/naluar/janelas
+	url = https://gitlab.com/nagruta/janelas
